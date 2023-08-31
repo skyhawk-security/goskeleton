@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+    middleware "github.com/deepmap/oapi-codegen/pkg/chi-middleware"
 	server "github.com/skyhawk-security/golang-example-repository/services/{{ .ServiceName }}/api"
 	"github.com/skyhawk-security/golang-example-repository/services/{{ .ServiceName }}/domain/entity"
 	"github.com/skyhawk-security/golang-example-repository/services/{{ .ServiceName }}/usecase/someusecase"
@@ -40,11 +41,22 @@ func (h *ChiHandler) Hello(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func NewChiHandler(usecase someusecase.{{ .ServiceNameUpper }}UseCase) http.Handler {
+func NewChiHandler(usecase someusecase.{{ .ServiceNameUpper }}UseCase) (http.Handler, error) {
 	h := &ChiHandler{
 		Usecase: usecase,
 	}
 
+	swaggerSpec, err := server.GetSwagger()
+    if err != nil {
+        return nil, err
+   	}
+
+   	options := server.ChiServerOptions{
+   	    Middlewares: []server.MiddlewareFunc{
+            middleware.OapiRequestValidator(swaggerSpec),
+        },
+    }
+
 	// IMPORTANT: make sure that you have successfully generated the server through the OpenAPI generator. otherwise, it won't work.
-	return server.Handler(h)
+	return server.HandlerWithOptions(h, options), nil
 }

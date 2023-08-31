@@ -10,7 +10,10 @@ func main() {
 	// create an usecase implementation. we only need to pass a repository object.
 	usecaseImplementation := someusecase.New{{ .ServiceNameUpper }}UseCaseImplementation()
 
-	server := handler.NewChiHandler(usecaseImplementation)
+	serverHandler, err := handler.NewChiHandler(usecaseImplementation)
+	if err != nil {
+	    panic("could not initialize handler with error: " + err.Error())
+	}
 
-	http.ListenAndServe(":8000", server)
+	http.ListenAndServe(":8000", serverHandler)
 }
