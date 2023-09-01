@@ -26,6 +26,8 @@ var templatePaths = map[string][]string{
 		"usecase/myusecase/types.go.tpl", "go.mod.tpl"},
 }
 
+const templatePath = "templates"
+
 // TODO install oapi-codegen and chi
 // TODO install oapi-codegen and chi
 // TODO install oapi-codegen and chi
@@ -61,7 +63,7 @@ func main() {
 			}
 
 			for _, t := range myServiceTemplatePaths {
-				if err := processTemplate(t, serviceType, serviceName, finalDestination); err != nil {
+				if err := processTemplate(filepath.Join(templatePath, serviceType, t), serviceName, serviceType, finalDestination); err != nil {
 					fmt.Printf("error processing template: %v", err)
 					return err
 				}
@@ -98,14 +100,12 @@ func main() {
 	}
 }
 
-func processTemplate(templatePath, serviceType, serviceName, finalDestination string) error {
-	serviceTypeAndNamePath := fmt.Sprintf("%s/%s", serviceType, templatePath)
-
-	if !strings.HasSuffix(serviceTypeAndNamePath, ".tpl") {
-		return fmt.Errorf("%s is not a template", serviceTypeAndNamePath)
+func processTemplate(pathToTemplate, serviceName, serviceType, finalDestination string) error {
+	if !strings.HasSuffix(pathToTemplate, ".tpl") {
+		return fmt.Errorf("%s is not a template", pathToTemplate)
 	}
 
-	templateContent, err := ioutil.ReadFile(serviceTypeAndNamePath)
+	templateContent, err := ioutil.ReadFile(pathToTemplate)
 	if err != nil {
 		return err
 	}
@@ -118,7 +118,7 @@ func processTemplate(templatePath, serviceType, serviceName, finalDestination st
 		ServiceNameUpper: strings.Title(serviceName),
 	}
 
-	writePath := fmt.Sprintf("%s/%s", finalDestination, strings.Replace(templatePath, ".tpl", "", -1))
+	writePath := filepath.Join(finalDestination, strings.TrimSuffix(strings.TrimPrefix(pathToTemplate, fmt.Sprintf("%s/%s", templatePath, serviceType)), ".tpl"))
 
 	err = os.MkdirAll(filepath.Dir(writePath), os.ModePerm)
 	if err != nil {
@@ -147,18 +147,16 @@ func processTemplate(templatePath, serviceType, serviceName, finalDestination st
 }
 
 func generateOpenAPITemplate(outputPath string) error {
-	specFile := "web/api/openapi.yaml.tpl"
+	specFile := filepath.Join(templatePath, "web/api/openapi.yaml.tpl")
 	outputFile := fmt.Sprintf("%s/server.go", outputPath)
 
 	// Run oapi-codegen as an external command
-	command := exec.Command("oapi-codegen", "-generate", "chi-server,types", "-package", "server", specFile)
+	command := exec.Command("oapi-codegen", "-generate", "chi-server,types,spec", "-package", "server", specFile)
 	output, err := command.CombinedOutput()
 	if err != nil {
 		fmt.Println("Error:", err)
 		return err
 	}
-
-	fmt.Println("WALLAK")
 
 	err = os.MkdirAll(filepath.Dir(outputFile), os.ModePerm)
 	if err != nil {

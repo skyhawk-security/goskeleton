@@ -17,7 +17,10 @@ func init() {
 	// create an usecase implementation. we only need to pass a repository object.
 	usecaseImplementation := someusecase.New{{ .ServiceNameUpper }}UseCaseImplementation()
 
-	r := handler.NewChiHandler(usecaseImplementation)
+	r, err := handler.NewChiHandler(usecaseImplementation)
+	if err != nil {
+	    panic("could not initialize handler with error: " + err.Error())
+	}
 
 	httpLambda = httpadapter.New(r)
 }
