@@ -21,3 +21,18 @@ Resources:
           - ''
           - - /aws/lambda/
             - Ref: LambdaFunction
+  LambdaArnParameter:
+    Type: "AWS::SSM::Parameter"
+    Properties:
+      Name: /aws/lambda/{{ .ServiceName }}/arn
+      Type: "String"
+      Value:
+        Fn::Join:
+          - ''
+          - - 'arn:aws:apigateway:'
+            - Ref: AWS::Region
+            - ":lambda:path/2015-03-31/functions/"
+            - Fn::GetAtt:
+                - LambdaFunction
+                - Arn
+            - "/invocations"

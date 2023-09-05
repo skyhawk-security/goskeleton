@@ -21,10 +21,16 @@ deployments.
 
 - [Installation](#installation)
 - [Features](#features)
+- [Example](#example)
 
 
 
 ## Installation
+1. Install oapi-codegen, the OpenAPI 3.x generator
+```
+go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest
+```
+
 ```azure
 cd cmd/goskeleton
 go install
@@ -42,3 +48,7 @@ AWS Lambda and Native (Docker, EC2, etc) deployments are available out of the bo
 
 #### OpenAPI 3.x code generation and validation
 Write your OpenAPI spec and let us do the REST. Avoid writing boilerplate code but still have control over what's going on
+
+
+## Example
+goskeleton --serviceName myCoolService --serviceType web --destination /tmp/zaza
