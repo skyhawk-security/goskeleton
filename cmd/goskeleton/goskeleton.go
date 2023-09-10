@@ -38,7 +38,7 @@ func main() {
 				return fmt.Errorf("service %s already exists", serviceName)
 			}
 
-			myServiceTemplatePaths, err := findFilesWithSuffix("./", ".tpl")
+			myServiceTemplatePaths, err := findFilesWithSuffix(filepath.Join(templatePath, serviceType), ".tpl")
 			if err != nil {
 				fmt.Println("Error:", err)
 				return err
