@@ -4,6 +4,8 @@ go 1.21.0
 
 require (
 	github.com/getkin/kin-openapi v0.118.0
+	github.com/go-chi/chi/v5 v5.0.10
+	github.com/oapi-codegen/runtime v1.0.0
 	github.com/spf13/cobra v1.7.0
 )
 

@@ -7,4 +7,5 @@ if ! which oapi-codegen >/dev/null 2>&1; then
     go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest
 fi
 
-oapi-codegen -generate chi-server,types,spec -package server openapi.yaml > server.go
+oapi-codegen -config server.cfg.yaml openapi.yaml.tpl
+go mod tidy
