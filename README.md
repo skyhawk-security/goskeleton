@@ -26,11 +26,6 @@ deployments.
 
 
 ## Installation
-1. Install oapi-codegen, the OpenAPI 3.x generator
-```
-go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest
-```
-
 ```azure
 cd cmd/goskeleton
 go install

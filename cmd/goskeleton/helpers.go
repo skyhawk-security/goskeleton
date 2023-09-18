@@ -2,12 +2,14 @@ package main
 
 import (
 	"fmt"
+	"github.com/getkin/kin-openapi/openapi3"
 	"io/ioutil"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	"github.com/deepmap/oapi-codegen/pkg/codegen"
 )
 
 func findFilesWithSuffix(directory, suffix string) ([]string, error) {
@@ -81,11 +83,33 @@ func generateOpenAPITemplate(outputPath string) error {
 	specFile := filepath.Join(templatePath, "web/api/openapi.yaml.tpl")
 	outputFile := fmt.Sprintf("%s/server.go", outputPath)
 
-	// Run oapi-codegen as an external command
-	command := exec.Command("oapi-codegen", "-generate", "chi-server,types,spec", "-package", "server", specFile)
-	output, err := command.CombinedOutput()
+	content, err := ioutil.ReadFile(specFile)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Printf("Error reading file: %v\n", err)
+		return err
+	}
+
+	packageName := "server"
+	opts := codegen.Configuration{
+		PackageName: packageName,
+		Generate: codegen.GenerateOptions{
+			ChiServer:    true,
+			Models:       true,
+			EmbeddedSpec: true,
+		},
+	}
+
+	loader := openapi3.NewLoader()
+	loader.IsExternalRefsAllowed = true
+
+	// Get a spec from the test definition in this file:
+	swagger, err := loader.LoadFromData(content)
+	if err != nil {
+		return err
+	}
+
+	server, err := codegen.Generate(swagger, opts)
+	if err != nil {
 		return err
 	}
 
@@ -95,7 +119,7 @@ func generateOpenAPITemplate(outputPath string) error {
 		return err
 	}
 
-	err = os.WriteFile(outputFile, output, 0644)
+	err = os.WriteFile(outputFile, []byte(server), 0644)
 	if err != nil {
 		fmt.Println("Error writing output file:", err)
 		return err
