@@ -89,10 +89,10 @@ func generateOpenAPITemplate(outputPath string) error {
 		return err
 	}
 
-	packageName := "server"
 	opts := codegen.Configuration{
-		PackageName: packageName,
+		PackageName: "api",
 		Generate: codegen.GenerateOptions{
+			Strict:       true,
 			ChiServer:    true,
 			Models:       true,
 			EmbeddedSpec: true,

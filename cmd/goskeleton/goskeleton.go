@@ -10,14 +10,6 @@ import (
 
 const templatePath = "templates"
 
-// TODO install oapi-codegen
-// TODO install oapi-codegen
-// TODO install oapi-codegen
-// TODO install oapi-codegen
-// TODO install oapi-codegen
-// TODO install oapi-codegen
-// TODO install oapi-codegen
-
 func main() {
 	var serviceName string
 	var serviceType string
