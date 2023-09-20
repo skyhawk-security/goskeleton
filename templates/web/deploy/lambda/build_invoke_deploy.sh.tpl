@@ -2,13 +2,27 @@
 
 set -e
 
-S3_ARTIFACT_BUCKET=$1
 FUNCTION_NAME={{ .ServiceName }}
 
-if [ ! $# -eq 1 ]; then
-    echo "arguments missing: S3 artifact bucket"
-    exit 1
+if [ $# -ne 2 ]; then
+  echo "you have to provide 2 arguments"
+  exit 1
 fi
+
+case $1 in
+    "deploy")
+        S3_ARTIFACT_BUCKET=$2
+        ;;
+    "local-invoke")
+        EVENT_PATH=$2
+        local_invoke=true
+        ;;
+    *)
+        echo "first argument should be deploy or local-invoke"
+        ;;
+esac
+
+
 
 # Install AWS SAM
 OS="$(uname -s)"
@@ -29,10 +43,17 @@ if ! command -v sam &>/dev/null; then
   fi
 fi
 
-
 #build
+echo "building lambda binary"
 go mod tidy
-GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o main cmd/lambda/main.go
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o deploy/lambda/main cmd/lambda/main.go
+
+if [ $local_invoke == "true" ];
+then
+  sam local invoke $FUNCTION_NAME --template deploy/lambda/cloudformation-template.yaml --event $EVENT_PATH
+  exit $?
+fi
+
 
 # prepare
 mkdir -p dist/

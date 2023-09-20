@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 )
 
 const templatePath = "templates"
@@ -19,6 +20,10 @@ func main() {
 		Use:   "cli",
 		Short: "A CLI application to create a Golang service skeleton",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if !isAlphabeticLowercase(serviceName) {
+				return fmt.Errorf("serviceName should be alphabetic lower case only")
+			}
+
 			if serviceType != "web" && serviceType != "eventDriven" {
 				return fmt.Errorf("serviceType should be either web or eventDriven")
 			}
@@ -72,4 +77,16 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+}
+
+func isAlphabeticLowercase(input string) bool {
+	pattern := "^[a-z]+$"
+
+	regex, err := regexp.Compile(pattern)
+	if err != nil {
+		fmt.Println("Error compiling regular expression:", err)
+		return false
+	}
+
+	return regex.MatchString(input)
 }
