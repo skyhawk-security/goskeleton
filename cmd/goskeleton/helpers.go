@@ -79,10 +79,15 @@ func processTemplate(pathToTemplate, serviceName, serviceType, finalDestination 
 	return nil
 }
 
-func generateOpenAPITemplate(outputPath string) error {
+func generateOpenAPITemplate(outputPath, specFile string) error {
 	fmt.Println("generating openapi server and types")
-	specFile := filepath.Join(templatePath, "web/api/openapi.yaml.tpl")
+
 	outputFile := fmt.Sprintf("%s/server.go", outputPath)
+
+	// if user didn't provide a path to specfile
+	if specFile == "" {
+		specFile = filepath.Join(templatePath, "web/api/openapi.yaml")
+	}
 
 	content, err := ioutil.ReadFile(specFile)
 	if err != nil {

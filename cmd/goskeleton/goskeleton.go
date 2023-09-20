@@ -47,7 +47,8 @@ func main() {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			serviceType = "web"
 
-			err := generateOpenAPITemplate(filepath.Join(filepath.Join(destination, serviceName), "api"))
+			fmt.Println("WALLAK openapiTemplatePath", openapiTemplatePath)
+			err := generateOpenAPITemplate(filepath.Join(filepath.Join(destination, serviceName), "api"), openapiTemplatePath)
 			if err != nil {
 				return err
 			}
