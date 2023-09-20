@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"text/template"
 
@@ -126,4 +127,16 @@ func generateOpenAPITemplate(outputPath string) error {
 	}
 
 	return nil
+}
+
+func isAlphabeticLowercase(input string) bool {
+	pattern := "^[a-z]+$"
+
+	regex, err := regexp.Compile(pattern)
+	if err != nil {
+		fmt.Println("Error compiling regular expression:", err)
+		return false
+	}
+
+	return regex.MatchString(input)
 }
