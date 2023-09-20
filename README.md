@@ -46,4 +46,4 @@ Write your OpenAPI spec and let us do the REST. Avoid writing boilerplate code b
 
 
 ## Example
-goskeleton --serviceName myCoolService --serviceType web --destination /tmp/zaza
+goskeleton web-service --serviceName mycoolservice --destination /Users/reshef.sharvit/Desktop
