@@ -47,9 +47,15 @@ func main() {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			serviceType = "web"
 
-			err := generateOpenAPITemplate(filepath.Join(filepath.Join(destination, serviceName), "api"))
+			err := generateOpenAPITemplate(filepath.Join(filepath.Join(destination, serviceName), "api"), openapiTemplatePath)
 			if err != nil {
 				return err
+			}
+
+			err = generateService(serviceName, serviceType, filepath.Join(destination, serviceName))
+			if err != nil {
+				fmt.Println("failed to generate service with error: " + err.Error())
+				os.Exit(1)
 			}
 
 			return nil
@@ -61,6 +67,12 @@ func main() {
 		Short: "Build an event driven service",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			serviceType = "eventDriven"
+			err := generateService(serviceName, serviceType, filepath.Join(destination, serviceName))
+			if err != nil {
+				fmt.Println("failed to generate service with error: " + err.Error())
+				os.Exit(1)
+			}
+
 			return nil
 		},
 	}
@@ -75,12 +87,6 @@ func main() {
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	err := generateService(serviceName, serviceType, filepath.Join(destination, serviceName))
-	if err != nil {
-		fmt.Println("failed to generate service with error: " + err.Error())
 		os.Exit(1)
 	}
 }

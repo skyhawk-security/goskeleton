@@ -79,10 +79,16 @@ func processTemplate(pathToTemplate, serviceName, serviceType, finalDestination 
 	return nil
 }
 
-func generateOpenAPITemplate(outputPath string) error {
+func generateOpenAPITemplate(outputPath, specFile string) error {
 	fmt.Println("generating openapi server and types")
-	specFile := filepath.Join(templatePath, "web/api/openapi.yaml.tpl")
-	outputFile := fmt.Sprintf("%s/server.go", outputPath)
+
+	generatedServerFile := fmt.Sprintf("%s/server.go", outputPath)
+	openapiSpecificationFile := fmt.Sprintf("%s/openapi.yaml", outputPath)
+
+	// if user didn't provide a path to specfile
+	if specFile == "" {
+		specFile = filepath.Join(templatePath, "web/api/openapi.yaml")
+	}
 
 	content, err := ioutil.ReadFile(specFile)
 	if err != nil {
@@ -114,13 +120,21 @@ func generateOpenAPITemplate(outputPath string) error {
 		return err
 	}
 
-	err = os.MkdirAll(filepath.Dir(outputFile), os.ModePerm)
+	err = os.MkdirAll(filepath.Dir(generatedServerFile), os.ModePerm)
 	if err != nil {
 		fmt.Println("Error:", err)
 		return err
 	}
 
-	err = os.WriteFile(outputFile, []byte(server), 0644)
+	// write the generated server to disk
+	err = os.WriteFile(generatedServerFile, []byte(server), 0644)
+	if err != nil {
+		fmt.Println("Error writing output file:", err)
+		return err
+	}
+
+	// write the openapi template to disk
+	err = os.WriteFile(openapiSpecificationFile, []byte(server), 0644)
 	if err != nil {
 		fmt.Println("Error writing output file:", err)
 		return err
