@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/getkin/kin-openapi/openapi3"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -85,15 +86,29 @@ func generateOpenAPITemplate(outputPath, specFile string) error {
 	generatedServerFile := fmt.Sprintf("%s/server.go", outputPath)
 	openapiSpecificationFile := fmt.Sprintf("%s/openapi.yaml", outputPath)
 
-	// if user didn't provide a path to specfile
-	if specFile == "" {
-		specFile = filepath.Join(templatePath, "web/api/openapi.yaml")
-	}
+	var content []byte
+	var err error
 
-	content, err := ioutil.ReadFile(specFile)
-	if err != nil {
-		fmt.Printf("Error reading file: %v\n", err)
-		return err
+	switch {
+	case specFile == "":
+		specFile = filepath.Join(templatePath, "web/api/openapi.yaml")
+
+		content, err = ioutil.ReadFile(specFile)
+		if err != nil {
+			fmt.Printf("Error reading file: %v\n", err)
+			return err
+		}
+	case strings.HasPrefix(specFile, "http"):
+		content, err = downloadAndLoadFile(specFile)
+		if err != nil {
+			fmt.Println("unable to download openapi specification file with error: " + err.Error())
+		}
+	default:
+		content, err = ioutil.ReadFile(specFile)
+		if err != nil {
+			fmt.Printf("Error reading file: %v\n", err)
+			return err
+		}
 	}
 
 	opts := codegen.Configuration{
@@ -134,7 +149,7 @@ func generateOpenAPITemplate(outputPath, specFile string) error {
 	}
 
 	// write the openapi template to disk
-	err = os.WriteFile(openapiSpecificationFile, []byte(server), 0644)
+	err = os.WriteFile(openapiSpecificationFile, content, 0644)
 	if err != nil {
 		fmt.Println("Error writing output file:", err)
 		return err
@@ -153,4 +168,26 @@ func isAlphabeticLowercase(input string) bool {
 	}
 
 	return regex.MatchString(input)
+}
+
+func downloadAndLoadFile(url string) ([]byte, error) {
+	// Send an HTTP GET request to the specified URL
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	// Check if the request was successful
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("HTTP request failed with status code %d", resp.StatusCode)
+	}
+
+	// Read the response body (file content) into a byte slice
+	fileContent, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return fileContent, nil
 }
