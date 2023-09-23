@@ -27,7 +27,6 @@ deployments.
 
 ## Installation
 ```azure
-cd cmd/goskeleton
 go install
 ```
 
