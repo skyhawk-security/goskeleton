@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/skyhawk-security/golang-example-repository/services/{{ .ServiceName }}/usecase/myusecase"
+	"github.com/skyhawk-security/{{ .ServiceName }}/usecase/myusecase"
 )
 
 func main() {

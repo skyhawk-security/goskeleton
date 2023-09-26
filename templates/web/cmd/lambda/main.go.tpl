@@ -5,8 +5,8 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/awslabs/aws-lambda-go-api-proxy/httpadapter"
-	"github.com/skyhawk-security/golang-example-repository/services/{{ .ServiceName }}/api/chi/handler"
-	"github.com/skyhawk-security/golang-example-repository/services/{{ .ServiceName }}/usecase/someusecase"
+	"github.com/skyhawk-security/{{ .ServiceName }}/api/chi/handler"
+	"github.com/skyhawk-security/{{ .ServiceName }}/usecase/someusecase"
 )
 
 var httpLambda *httpadapter.HandlerAdapter

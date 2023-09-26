@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/skyhawk-security/golang-example-repository/services/{{ .ServiceName }}/usecase/myusecase"
+	"github.com/skyhawk-security/{{ .ServiceName }}/usecase/myusecase"
 )
 
 var userCaseImplementation *myusecase.{{ .ServiceNameUpper }}UseCaseImplementation

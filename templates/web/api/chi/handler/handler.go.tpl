@@ -4,8 +4,8 @@ import (
 	"github.com/go-chi/chi/v5"
 	chiMiddleware "github.com/go-chi/chi/v5/middleware"
     middleware "github.com/deepmap/oapi-codegen/pkg/chi-middleware"
-	"github.com/skyhawk-security/golang-example-repository/services/{{ .ServiceName }}/api"
-	"github.com/skyhawk-security/golang-example-repository/services/{{ .ServiceName }}/usecase/someusecase"
+	"github.com/skyhawk-security/{{ .ServiceName }}/api"
+	"github.com/skyhawk-security/{{ .ServiceName }}/usecase/someusecase"
 	"net/http"
 )
 
