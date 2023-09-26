@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/skyhawk-security/golang-example-repository/services/{{ .ServiceName }}/api/chi/handler"
-	"github.com/skyhawk-security/golang-example-repository/services/{{ .ServiceName }}/usecase/someusecase"
+	"github.com/skyhawk-security/{{ .ServiceName }}/api/chi/handler"
+	"github.com/skyhawk-security/{{ .ServiceName }}/usecase/someusecase"
 	"net/http"
 )
 

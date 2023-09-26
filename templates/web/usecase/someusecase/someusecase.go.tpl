@@ -2,7 +2,7 @@ package someusecase
 
 import (
 	"fmt"
-	"github.com/skyhawk-security/golang-example-repository/services/{{ .ServiceName }}/domain/entity"
+	"github.com/skyhawk-security/{{ .ServiceName }}/domain/entity"
 )
 
 func New{{ .ServiceNameUpper }}UseCaseImplementation() *{{ .ServiceNameUpper }}UseCaseImplementation {

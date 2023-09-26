@@ -1,4 +1,4 @@
-module github.com/skyhawk-security/golang-example-repository/services/{{ .ServiceName }}
+module github.com/skyhawk-security/{{ .ServiceName }}
 
 go 1.21.0
 

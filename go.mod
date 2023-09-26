@@ -1,4 +1,4 @@
-module github.com/skyhawk-security/golang-example-repository/tools/goskeleton
+module github.com/skyhawk-security/goskeleton
 
 go 1.21.0
 
