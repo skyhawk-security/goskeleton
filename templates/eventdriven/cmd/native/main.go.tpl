@@ -7,5 +7,6 @@ import (
 func main() {
 	_ = myusecase.New{{ .ServiceNameUpper }}UseCaseImplementation()
 
-	// invoke a use case method to actually do something
+    // native execution will poll an event source source as SQS/SNS
+    // implement the polling mechanism and then invoke a use case method to actually do something
 }

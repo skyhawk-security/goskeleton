@@ -12,14 +12,15 @@ var userCaseImplementation *myusecase.{{ .ServiceNameUpper }}UseCaseImplementati
 // in lambdas, code outside the lambda context is preserved for subsequent runs. so we can use init() to initialize
 // the dependencies and save valuable time and resources
 func init() {
-	userCaseImplementation = myusecase.New{{ .ServiceName }}UseCaseImplementation()
+	userCaseImplementation = myusecase.New{{ .ServiceNameUpper }}UseCaseImplementation()
 }
 
 // in lambdas, code outside the lambda context is preserved for subsequent runs. so we can use init() to initialize
 // the dependencies and save valuable time and resources
-// this is an SQS example but it could be of other event types
-func handler(ctx context.Context, sqsEvent events.SQSEvent) error {
-	return nil
+func handler(ctx context.Context, event events.{{ .EventSource }}Event) error {
+	for _, record := range event.Records {
+    	// unmarshal and/or implement your business logic here
+    }
 }
 
 func main() {
