@@ -15,20 +15,32 @@ import (
 )
 
 func findFilesWithSuffix(directory, suffix string) ([]string, error) {
+	var files []string
 	var matchingFiles []string
 
-	err := filepath.Walk(directory, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if !info.IsDir() && filepath.Ext(path) == suffix {
-			matchingFiles = append(matchingFiles, path)
-		}
-		return nil
-	})
-
+	entries, err := templateFs.ReadDir(directory)
 	if err != nil {
 		return nil, err
+	}
+
+	for _, entry := range entries {
+		if entry.IsDir() {
+			// Recursively list files in subdirectories if needed.
+			subdirectory := filepath.Join(directory, entry.Name())
+			subFiles, err := findFilesWithSuffix(subdirectory, suffix)
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, subFiles...)
+		} else {
+			files = append(files, filepath.Join(directory, entry.Name()))
+		}
+	}
+
+	for _, f := range files {
+		if filepath.Ext(f) == suffix {
+			matchingFiles = append(matchingFiles, f)
+		}
 	}
 
 	return matchingFiles, nil
@@ -39,7 +51,7 @@ func processTemplate(pathToTemplate, serviceName, serviceType, finalDestination 
 		return fmt.Errorf("%s is not a template", pathToTemplate)
 	}
 
-	templateContent, err := ioutil.ReadFile(pathToTemplate)
+	templateContent, err := templateFs.ReadFile(pathToTemplate)
 	if err != nil {
 		return err
 	}
@@ -92,23 +104,16 @@ func generateOpenAPITemplate(outputPath, specFile string) error {
 	switch {
 	case specFile == "":
 		specFile = filepath.Join(templatePath, "web/api/openapi.yaml")
-
-		content, err = ioutil.ReadFile(specFile)
-		if err != nil {
-			fmt.Printf("Error reading file: %v\n", err)
-			return err
-		}
+		content, err = templateFs.ReadFile(specFile)
 	case strings.HasPrefix(specFile, "http"):
 		content, err = downloadAndLoadFile(specFile)
-		if err != nil {
-			fmt.Println("unable to download openapi specification file with error: " + err.Error())
-		}
 	default:
-		content, err = ioutil.ReadFile(specFile)
-		if err != nil {
-			fmt.Printf("Error reading file: %v\n", err)
-			return err
-		}
+		content, err = templateFs.ReadFile(specFile)
+	}
+
+	if err != nil {
+		fmt.Printf("Error reading file: %v\n", err)
+		return err
 	}
 
 	opts := codegen.Configuration{

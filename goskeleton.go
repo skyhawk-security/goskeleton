@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
@@ -8,6 +9,9 @@ import (
 )
 
 const templatePath = "templates"
+
+//go:embed templates/*
+var templateFs embed.FS
 
 func main() {
 	var serviceName string
