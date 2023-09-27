@@ -8,9 +8,20 @@ Resources:
       Handler: main
       FunctionName: {{ .ServiceName }}
       Runtime: go1.x
+      Events:
+        My{{ .EventSource }}Event:
+          Type: {{ .EventSource }}
+          Properties:
+          {{- if ("SQS" | eq .EventSource) }}
+            Queue: {{ .EventSourceARN }}
+            BatchSize: 10
+          {{- end }}
+          {{- if ("SNS" | eq .EventSource) }}
+            Topic: {{ .EventSourceARN }}
+          {{- end}}
       CodeUri: ./
       MemorySize: 256
-      Timeout: 300
+      Timeout: 10
   LambdaFunctionLogGroup:
     Type: AWS::Logs::LogGroup
     DependsOn: LambdaFunction
