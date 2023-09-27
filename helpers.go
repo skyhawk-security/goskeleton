@@ -60,10 +60,12 @@ func (s *Service) processTemplate(pathToTemplate, finalDestination string) error
 		ServiceName      string
 		ServiceNameUpper string
 		EventSource      EventSource
+		EventSourceARN   string
 	}{
 		ServiceName:      s.Name,
 		ServiceNameUpper: strings.Title(s.Name),
 		EventSource:      s.EventSource,
+		EventSourceARN:   s.EventSourceARN,
 	}
 
 	writePath := filepath.Join(finalDestination, strings.TrimSuffix(strings.TrimPrefix(pathToTemplate, fmt.Sprintf("%s/%s", templatePath, s.Type)), ".tpl"))
@@ -80,6 +82,14 @@ func (s *Service) processTemplate(pathToTemplate, finalDestination string) error
 		return err
 	}
 	defer outputFile.Close()
+
+	// make the file executable if we're going to need to execute it
+	if strings.HasSuffix(writePath, "sh") {
+		if err := os.Chmod(writePath, os.FileMode(0755)); err != nil {
+			fmt.Println("Error changing file permissions:", err)
+			return err
+		}
+	}
 
 	// Create a new template
 	tmpl := template.Must(template.New("my-template").Parse(string(templateContent)))

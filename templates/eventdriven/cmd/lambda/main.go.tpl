@@ -21,6 +21,8 @@ func handler(ctx context.Context, event events.{{ .EventSource }}Event) error {
 	for _, record := range event.Records {
     	// unmarshal and/or implement your business logic here
     }
+
+    return nil
 }
 
 func main() {

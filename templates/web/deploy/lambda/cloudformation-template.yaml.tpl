@@ -10,7 +10,7 @@ Resources:
       Runtime: go1.x
       CodeUri: ./
       MemorySize: 256
-      Timeout: 300
+      Timeout: 10
   LambdaFunctionLogGroup:
     Type: AWS::Logs::LogGroup
     DependsOn: LambdaFunction

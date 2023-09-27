@@ -24,6 +24,7 @@ type Service struct {
 	Destination         string
 	OpenAPITemplatePath string
 	EventSource         EventSource
+	EventSourceARN      string
 }
 
 //go:embed templates/*
@@ -106,7 +107,9 @@ func main() {
 	webCmd.Flags().StringVarP(&service.OpenAPITemplatePath, "openapi-template-path", "o", "", "Path to OpenAPI Template")
 
 	eventDrivenCmd.Flags().StringVarP((*string)(&service.EventSource), "event-source", "e", "", "Event Source. SQS/SNS/etc")
+	eventDrivenCmd.Flags().StringVarP(&service.EventSourceARN, "event-source-arn", "a", "", "Event Source ARN that triggers the lambda. for example, the ARN of the SQS queue URL")
 	eventDrivenCmd.MarkFlagRequired("event-source")
+	eventDrivenCmd.MarkFlagRequired("event-source-arn")
 
 	rootCmd.AddCommand(webCmd)
 	rootCmd.AddCommand(eventDrivenCmd)
