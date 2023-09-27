@@ -46,7 +46,7 @@ func findFilesWithSuffix(directory, suffix string) ([]string, error) {
 	return matchingFiles, nil
 }
 
-func processTemplate(pathToTemplate, serviceName, serviceType, finalDestination string) error {
+func (s *Service) processTemplate(pathToTemplate, finalDestination string) error {
 	if !strings.HasSuffix(pathToTemplate, ".tpl") {
 		return fmt.Errorf("%s is not a template", pathToTemplate)
 	}
@@ -59,12 +59,14 @@ func processTemplate(pathToTemplate, serviceName, serviceType, finalDestination 
 	data := struct {
 		ServiceName      string
 		ServiceNameUpper string
+		EventSource      EventSource
 	}{
-		ServiceName:      serviceName,
-		ServiceNameUpper: strings.Title(serviceName),
+		ServiceName:      s.Name,
+		ServiceNameUpper: strings.Title(s.Name),
+		EventSource:      s.EventSource,
 	}
 
-	writePath := filepath.Join(finalDestination, strings.TrimSuffix(strings.TrimPrefix(pathToTemplate, fmt.Sprintf("%s/%s", templatePath, serviceType)), ".tpl"))
+	writePath := filepath.Join(finalDestination, strings.TrimSuffix(strings.TrimPrefix(pathToTemplate, fmt.Sprintf("%s/%s", templatePath, s.Type)), ".tpl"))
 
 	err = os.MkdirAll(filepath.Dir(writePath), os.ModePerm)
 	if err != nil {

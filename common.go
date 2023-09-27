@@ -20,15 +20,15 @@ func validate(serviceName, finalDestination string) error {
 	return nil
 }
 
-func generateService(serviceName, serviceType, finalDestination string) error {
-	myServiceTemplatePaths, err := findFilesWithSuffix(filepath.Join(templatePath, serviceType), ".tpl")
+func (s *Service) generateService(finalDestination string) error {
+	myServiceTemplatePaths, err := findFilesWithSuffix(filepath.Join(templatePath, s.Type), ".tpl")
 	if err != nil {
 		fmt.Println("Error:", err)
 		return err
 	}
 
 	for _, t := range myServiceTemplatePaths {
-		if err := processTemplate(t, serviceName, serviceType, finalDestination); err != nil {
+		if err := s.processTemplate(t, finalDestination); err != nil {
 			fmt.Printf("error processing template: %v", err)
 			return err
 		}
