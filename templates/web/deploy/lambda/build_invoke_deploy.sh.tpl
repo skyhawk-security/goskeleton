@@ -46,9 +46,9 @@ fi
 #build
 echo "building lambda binary"
 go mod tidy
-GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o deploy/lambda/main cmd/lambda/main.go
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o main cmd/lambda/main.go
 
-if [ $local_invoke == "true" ];
+if [[ "$local_invoke" == "true" ]];
 then
   sam local invoke $FUNCTION_NAME --template deploy/lambda/cloudformation-template.yaml --event $EVENT_PATH
   exit $?
