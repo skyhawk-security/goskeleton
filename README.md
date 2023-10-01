@@ -45,4 +45,8 @@ Write your OpenAPI spec and let us do the REST. Avoid writing boilerplate code b
 
 
 ## Example
+#### For a web server Lambda
 goskeleton web-service --serviceName mycoolservice --destination /Users/reshef.sharvit/Desktop
+
+#### For an event driven Lambda
+goskeleton event-driven --event-source SQS --event-source-arn arn:aws:sqs:us-east-1:123456789:resheftest-kabadi --serviceName mycoolservice --destination /Users/reshef.sharvit/Desktop/
