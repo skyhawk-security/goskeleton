@@ -22,6 +22,9 @@ Resources:
       CodeUri: ./
       MemorySize: 256
       Timeout: 10
+      Environment:
+        Variables:
+          MyCoolEnvvar: MyCoolEnvvar
   LambdaFunctionLogGroup:
     Type: AWS::Logs::LogGroup
     DependsOn: LambdaFunction
@@ -35,7 +38,7 @@ Resources:
   LambdaArnParameter:
     Type: "AWS::SSM::Parameter"
     Properties:
-      Name: /aws/lambda/{{ .ServiceName }}/arn
+      Name: /lambda/{{ .ServiceName }}/arn
       Type: "String"
       Value:
         Fn::Join:

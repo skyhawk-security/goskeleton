@@ -14,6 +14,7 @@ import (
 	"github.com/deepmap/oapi-codegen/pkg/codegen"
 )
 
+// find the relevant files
 func findFilesWithSuffix(directory, suffix string) ([]string, error) {
 	var files []string
 	var matchingFiles []string
@@ -114,13 +115,16 @@ func generateOpenAPITemplate(outputPath, specFile string) error {
 	var err error
 
 	switch {
+
+	// if no openapi template specified
 	case specFile == "":
 		specFile = filepath.Join(templatePath, "web/api/openapi.yaml")
 		content, err = templateFs.ReadFile(specFile)
+	// openapi specified from the web
 	case strings.HasPrefix(specFile, "http"):
 		content, err = downloadAndLoadFile(specFile)
 	default:
-		content, err = templateFs.ReadFile(specFile)
+		content, err = ioutil.ReadFile(specFile)
 	}
 
 	if err != nil {
@@ -176,9 +180,7 @@ func generateOpenAPITemplate(outputPath, specFile string) error {
 }
 
 func isAlphabeticLowercase(input string) bool {
-	pattern := "^[a-z]+$"
-
-	regex, err := regexp.Compile(pattern)
+	regex, err := regexp.Compile("^[a-z]+$")
 	if err != nil {
 		fmt.Println("Error compiling regular expression:", err)
 		return false
