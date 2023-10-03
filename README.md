@@ -1,3 +1,6 @@
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/skyhawk-security/goskeleton/graphs/commit-activity)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+
 <a href="https://skyhawk.security/">
     <img src="https://avatars.githubusercontent.com/u/134402648?s=200&v=4" alt="Skyhawk Security logo" title="Skyhawk Security" align="right" height="60" />
 </a>
