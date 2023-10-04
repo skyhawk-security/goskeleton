@@ -1,35 +1,30 @@
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/skyhawk-security/goskeleton/graphs/commit-activity)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=flat-square)](https://github.com/skyhawk-security/goskeleton/graphs/commit-activity)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=flat-square)](.github/CODE_OF_CONDUCT.md)
+![go.mod Go version](https://img.shields.io/github/go-mod/go-version/skyhawk-security/goskeleton/main?style=flat-square&logo=go&label=ver)
 
-<a href="https://skyhawk.security/">
-    <img src="https://avatars.githubusercontent.com/u/134402648?s=200&v=4" alt="Skyhawk Security logo" title="Skyhawk Security" align="right" height="60" />
-</a>
-
-<div align="center">
-<img src="https://speedmedia.jfrog.com/08612fe1-9391-4cf3-ac1a-6dd49c36b276/https://media.jfrog.com/wp-content/uploads/2020/01/20125954/BLOG_GO_XRAY863X300.jpg/w_863" width="500", height="200">
-
-</div>
-
+[<center><img width="60%" align="center" src=".github/resources/goskeleton.jpeg" />](https://skyhawk.security/)
+[<img width="8%" align="right" src=".github/resources/skyhawk_logo.jpeg" /></center>](https://skyhawk.security/)
 
 # Go Skeleton
 
-
 Go Skeleton is a project aimed at creating skeleton services for easier and quicker onboarding to both the projects and
 the Golang language itself.
-The projects that are generated are built with Clean Architecture and support both native (docker, ec2, etc) and lambda
+The projects that are generated are built with Clean Architecture and support both native (docker, ec2, etc.) and lambda
 deployments.
 
+This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md).
+By participating, you are expected to uphold this code. Please report unacceptable behavior to [goskeleton@skyhawk.security](mailto:goskeleton@skyhawk.security) .
 
 ## Table Of Contents
 
 - [Installation](#installation)
 - [Features](#features)
 - [Example](#example)
-
-
+- [Discussion](#discussion)
+- [License](#license)
 
 ## Installation
-```azure
+```zsh
 go install
 ```
 
@@ -53,3 +48,11 @@ goskeleton web-service --serviceName mycoolservice --destination /Users/reshef.s
 
 #### For an event driven Lambda
 goskeleton event-driven --event-source SQS --event-source-arn arn:aws:sqs:us-east-1:123456789:resheftest-kabadi --serviceName mycoolservice --destination /Users/reshef.sharvit/Desktop/
+
+
+## Discussion
+Discuss **goskeleton** on [GitHub Discussions](https://github.com/skyhawk-security/goskeleton/discussions)
+
+
+## License
+[GPL-3.0](https://github.com/skyhawk-security/goskeleton/blob/main/LICENSE.md)
