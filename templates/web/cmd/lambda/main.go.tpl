@@ -25,8 +25,9 @@ func init() {
 	httpLambda = httpadapter.New(r)
 }
 
-func Handler(_ context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	return httpLambda.Proxy(req)
+func Handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	ctx = context.WithValue(ctx, "RequestContext", req.RequestContext)
+    return httpLambda.ProxyWithContext(ctx, req)
 }
 
 func main() {
