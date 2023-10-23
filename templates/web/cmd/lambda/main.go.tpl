@@ -26,7 +26,7 @@ func init() {
 }
 
 func Handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	ctx = context.WithValue(ctx, "RequestContext", req.RequestContext)
+	ctx = context.WithValue(ctx, "RequestContext", req.RequestContext) // nolint
     return httpLambda.ProxyWithContext(ctx, req)
 }
 
