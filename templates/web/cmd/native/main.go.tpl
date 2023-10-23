@@ -15,5 +15,8 @@ func main() {
 	    panic("could not initialize handler with error: " + err.Error())
 	}
 
-	http.ListenAndServe(":8000", serverHandler)
+	err = http.ListenAndServe(":8000", serverHandler)
+    if err != nil {
+    	panic(err)
+   	}
 }
