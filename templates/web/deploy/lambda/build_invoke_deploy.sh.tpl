@@ -4,6 +4,16 @@ set -e
 
 FUNCTION_NAME={{ .ServiceName }}
 
+SCRIPT_PATH="$(realpath "$0")"
+DIR_PATH=$(dirname "$SCRIPT_PATH")
+PARENT_DIR_PATH=$(dirname $(dirname "$DIR_PATH"))
+
+if [ "$PWD" != "$PARENT_DIR_PATH" ]
+then
+  echo "ERROR: you have to execute the generation command from the service's root: $PARENT_DIR_PATH"
+  exit 1
+fi
+
 if [ $# -ne 2 ]; then
   echo "you have to provide 2 arguments"
   exit 1
@@ -41,6 +51,12 @@ if ! command -v sam &>/dev/null; then
       echo "Unsupported operating system: $OS"
       exit 1
   fi
+fi
+
+# generate server
+if [ -d "api" ]; then
+    echo "generating server"
+    ./api/generate_server.sh
 fi
 
 #build
