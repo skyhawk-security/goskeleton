@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	"github.com/getkin/kin-openapi/openapi3"
-	"io/ioutil"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
+	"io"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -57,6 +59,9 @@ func (s *Service) processTemplate(pathToTemplate, finalDestination string) error
 		return err
 	}
 
+	caser := cases.Title(language.English)
+	serviceNameUpper := caser.String(s.Name)
+
 	data := struct {
 		ServiceName      string
 		ServiceNameUpper string
@@ -64,7 +69,7 @@ func (s *Service) processTemplate(pathToTemplate, finalDestination string) error
 		EventSourceARN   string
 	}{
 		ServiceName:      s.Name,
-		ServiceNameUpper: strings.Title(s.Name),
+		ServiceNameUpper: serviceNameUpper,
 		EventSource:      s.EventSource,
 		EventSourceARN:   s.EventSourceARN,
 	}
@@ -124,7 +129,7 @@ func generateOpenAPITemplate(outputPath, specFile string) error {
 	case strings.HasPrefix(specFile, "http"):
 		content, err = downloadAndLoadFile(specFile)
 	default:
-		content, err = ioutil.ReadFile(specFile)
+		content, err = os.ReadFile(specFile)
 	}
 
 	if err != nil {
@@ -203,7 +208,7 @@ func downloadAndLoadFile(url string) ([]byte, error) {
 	}
 
 	// Read the response body (file content) into a byte slice
-	fileContent, err := ioutil.ReadAll(resp.Body)
+	fileContent, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}

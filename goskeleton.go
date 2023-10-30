@@ -53,9 +53,9 @@ func main() {
 	rootCmd.PersistentFlags().StringVarP(&service.Name, "serviceName", "n", "", "Name of the service")
 	rootCmd.PersistentFlags().StringVarP(&service.Destination, "destination", "d", "", "Destination to write the skeleton to")
 
-	rootCmd.MarkFlagRequired("serviceName")
-	rootCmd.MarkFlagRequired("serviceType")
-	rootCmd.MarkFlagRequired("destination")
+	rootCmd.MarkFlagRequired("serviceName") // nolint
+	rootCmd.MarkFlagRequired("serviceType") // nolint
+	rootCmd.MarkFlagRequired("destination") // nolint
 
 	webCmd := &cobra.Command{
 		Use:   "web-service command",
@@ -108,8 +108,8 @@ func main() {
 
 	eventDrivenCmd.Flags().StringVarP((*string)(&service.EventSource), "event-source", "e", "", "Event Source. SQS/SNS/etc")
 	eventDrivenCmd.Flags().StringVarP(&service.EventSourceARN, "event-source-arn", "a", "", "Event Source ARN that triggers the lambda. for example, the ARN of the SQS queue URL")
-	eventDrivenCmd.MarkFlagRequired("event-source")
-	eventDrivenCmd.MarkFlagRequired("event-source-arn")
+	eventDrivenCmd.MarkFlagRequired("event-source")     // nolint
+	eventDrivenCmd.MarkFlagRequired("event-source-arn") // nolint
 
 	rootCmd.AddCommand(webCmd)
 	rootCmd.AddCommand(eventDrivenCmd)
