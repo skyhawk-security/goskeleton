@@ -22,9 +22,6 @@ Resources:
       CodeUri: ./
       MemorySize: 256
       Timeout: 10
-      Environment:
-        Variables:
-          MyCoolEnvvar: MyCoolEnvvar
   LambdaFunctionLogGroup:
     Type: AWS::Logs::LogGroup
     DependsOn: LambdaFunction
@@ -40,13 +37,4 @@ Resources:
     Properties:
       Name: /lambda/{{ .ServiceName }}/arn
       Type: "String"
-      Value:
-        Fn::Join:
-          - ''
-          - - 'arn:aws:apigateway:'
-            - Ref: AWS::Region
-            - ":lambda:path/2015-03-31/functions/"
-            - Fn::GetAtt:
-                - LambdaFunction
-                - Arn
-            - "/invocations"
+      Value: !GetAtt LambdaFunction.Arn

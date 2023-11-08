@@ -51,9 +51,7 @@ components:
                     type: string
         ErrorOutput:
             type: "object"
-            required: ["message", "status_code"]
+            required: ["message"]
             properties:
                 message:
                      type: "string"            
-                status_code:
-                     type: "integer" 
