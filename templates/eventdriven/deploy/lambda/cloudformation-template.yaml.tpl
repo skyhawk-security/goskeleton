@@ -19,7 +19,7 @@ Resources:
           {{- if ("SNS" | eq .EventSource) }}
             Topic: {{ .EventSourceARN }}
           {{- end}}
-      CodeUri: ./
+      CodeUri: ../../cmd/lambda
       MemorySize: 256
       Timeout: 10
   LambdaFunctionLogGroup:

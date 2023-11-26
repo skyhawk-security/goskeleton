@@ -8,7 +8,7 @@ Resources:
       Handler: main
       FunctionName: {{ .ServiceName }}
       Runtime: go1.x
-      CodeUri: ./
+      CodeUri: ../../cmd/lambda
       MemorySize: 256
       Timeout: 10
       Environment:

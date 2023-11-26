@@ -59,10 +59,8 @@ if [ -d "api" ]; then
     ./api/generate_server.sh
 fi
 
-#build
-echo "building lambda binary"
-go mod tidy
-GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o main cmd/lambda/main.go
+# build
+sam build --template deploy/lambda/cloudformation-template.yaml
 
 if [[ "$local_invoke" == "true" ]];
 then
@@ -70,16 +68,10 @@ then
   exit $?
 fi
 
-
-# prepare
-mkdir -p dist/
-cp main dist/
-cp deploy/lambda/cloudformation-template.yaml dist/
-
 # package
-sam package --metadata function=$FUNCTION_NAME --s3-prefix $FUNCTION_NAME --template-file dist/cloudformation-template.yaml --s3-bucket $S3_ARTIFACT_BUCKET --output-template-file dist/packaged.yaml
+sam package --metadata function=$FUNCTION_NAME --s3-prefix $FUNCTION_NAME --template-file deploy/lambda/cloudformation-template.yaml --s3-bucket $S3_ARTIFACT_BUCKET --output-template-file packaged.yaml
 
 # deploy
-sam deploy --template-file dist/packaged.yaml --stack-name "$FUNCTION_NAME" --capabilities CAPABILITY_IAM
+sam deploy --template-file packaged.yaml --stack-name "$FUNCTION_NAME" --capabilities CAPABILITY_IAM
 
-exit 0
+exit 0 0
