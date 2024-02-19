@@ -1,23 +1,23 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
-Description: {{ .ServiceName }} lambda
+Description: [[[ .ServiceName ]]] lambda
 Resources:
   LambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: main
-      FunctionName: {{ .ServiceName }}
+      FunctionName: [[[ .ServiceName ]]]
       Runtime: go1.x
       Events:
-        My{{ .EventSource }}Event:
-          Type: {{ .EventSource }}
+        My[[[ .EventSource ]]]Event:
+          Type: [[[ .EventSource ]]]
           Properties:
           {{- if ("SQS" | eq .EventSource) }}
-            Queue: {{ .EventSourceARN }}
+            Queue: [[[ .EventSourceARN ]]]
             BatchSize: 10
           {{- end }}
           {{- if ("SNS" | eq .EventSource) }}
-            Topic: {{ .EventSourceARN }}
+            Topic: [[[ .EventSourceARN ]]]
           {{- end}}
       CodeUri: ./
       MemorySize: 256
@@ -35,6 +35,6 @@ Resources:
   LambdaArnParameter:
     Type: "AWS::SSM::Parameter"
     Properties:
-      Name: /lambda/{{ .ServiceName }}/arn
+      Name: /lambda/[[[ .ServiceName ]]]/arn
       Type: "String"
       Value: !GetAtt LambdaFunction.Arn

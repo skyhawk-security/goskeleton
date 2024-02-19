@@ -2,12 +2,6 @@
     <img src="https://avatars.githubusercontent.com/u/134402648?s=200&v=4" alt="Skyhawk Security logo" title="Skyhawk Security" align="right" height="60" />
 </a>
 
-<div align="center">
-<img src="https://speedmedia.jfrog.com/08612fe1-9391-4cf3-ac1a-6dd49c36b276/https://media.jfrog.com/wp-content/uploads/2020/01/20125954/BLOG_GO_XRAY863X300.jpg/w_863" width="500", height="200">
-
-</div>
-
-
 # Go Skeleton
 
 

@@ -5,8 +5,8 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/awslabs/aws-lambda-go-api-proxy/httpadapter"
-	"github.com/skyhawk-security/{{ .ServiceName }}/api/chi/handler"
-	"github.com/skyhawk-security/{{ .ServiceName }}/usecase/someusecase"
+	"github.com/skyhawk-security/[[[ .ServiceName ]]]/api/chi/handler"
+	"github.com/skyhawk-security/[[[ .ServiceName ]]]/usecase/someusecase"
 )
 
 var httpLambda *httpadapter.HandlerAdapter
@@ -15,7 +15,7 @@ var httpLambda *httpadapter.HandlerAdapter
 // the dependencies and save valuable time and resources
 func init() {
 	// create an usecase implementation. we only need to pass a repository object.
-	usecaseImplementation := someusecase.New{{ .ServiceNameUpper }}UseCaseImplementation()
+	usecaseImplementation := someusecase.New[[[ .ServiceNameUpper ]]]UseCaseImplementation()
 
 	r, err := handler.NewChiHandler(usecaseImplementation)
 	if err != nil {

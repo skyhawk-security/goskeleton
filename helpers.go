@@ -98,9 +98,9 @@ func (s *Service) processTemplate(pathToTemplate, finalDestination string) error
 	}
 
 	// Create a new template
-	tmpl := template.Must(template.New("my-template").Parse(string(templateContent)))
+	tmpl := template.Must(template.New("my-template").Delims("[[[", "]]]").Parse(string(templateContent)))
 
-	// Execute the template and write to the output file
+	// execute the template and write to the output file.
 	err = tmpl.Execute(outputFile, data)
 	if err != nil {
 		fmt.Println("Error executing template:", err)
@@ -113,19 +113,18 @@ func (s *Service) processTemplate(pathToTemplate, finalDestination string) error
 func generateOpenAPITemplate(outputPath, specFile string) error {
 	fmt.Println("generating openapi server and types")
 
-	generatedServerFile := fmt.Sprintf("%s/server.go", outputPath)
+	generatedServerFile := fmt.Sprintf("%s/server.gen.go", outputPath)
 	openapiSpecificationFile := fmt.Sprintf("%s/openapi.yaml", outputPath)
 
 	var content []byte
 	var err error
 
 	switch {
-
-	// if no openapi template specified
+	// if no openapi template specified.
 	case specFile == "":
 		specFile = filepath.Join(templatePath, "web/api/openapi.yaml")
 		content, err = templateFs.ReadFile(specFile)
-	// openapi specified from the web
+	// openapi specified from the web.
 	case strings.HasPrefix(specFile, "http"):
 		content, err = downloadAndLoadFile(specFile)
 	default:
@@ -150,31 +149,33 @@ func generateOpenAPITemplate(outputPath, specFile string) error {
 	loader := openapi3.NewLoader()
 	loader.IsExternalRefsAllowed = true
 
-	// Get a spec from the test definition in this file:
+	// Get a spec from the test definition in this file.
 	swagger, err := loader.LoadFromData(content)
 	if err != nil {
 		return err
 	}
 
+	// generate the openapi server.
 	server, err := codegen.Generate(swagger, opts)
 	if err != nil {
 		return err
 	}
 
+	// create a directory for the generated service.
 	err = os.MkdirAll(filepath.Dir(generatedServerFile), os.ModePerm)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println("Error creating a directory:", err)
 		return err
 	}
 
-	// write the generated server to disk
+	// write the generated server to disk.
 	err = os.WriteFile(generatedServerFile, []byte(server), 0644)
 	if err != nil {
 		fmt.Println("Error writing output file:", err)
 		return err
 	}
 
-	// write the openapi template to disk
+	// write the openapi template to disk.
 	err = os.WriteFile(openapiSpecificationFile, content, 0644)
 	if err != nil {
 		fmt.Println("Error writing output file:", err)
@@ -195,19 +196,17 @@ func isAlphabeticLowercase(input string) bool {
 }
 
 func downloadAndLoadFile(url string) ([]byte, error) {
-	// Send an HTTP GET request to the specified URL
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
 
-	// Check if the request was successful
+	defer resp.Body.Close() // nolint
+
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("HTTP request failed with status code %d", resp.StatusCode)
 	}
 
-	// Read the response body (file content) into a byte slice
 	fileContent, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err

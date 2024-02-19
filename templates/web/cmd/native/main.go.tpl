@@ -1,14 +1,14 @@
 package main
 
 import (
-	"github.com/skyhawk-security/{{ .ServiceName }}/api/chi/handler"
-	"github.com/skyhawk-security/{{ .ServiceName }}/usecase/someusecase"
+	"github.com/skyhawk-security/[[[ .ServiceName ]]]/api/chi/handler"
+	"github.com/skyhawk-security/[[[ .ServiceName ]]]/usecase/someusecase"
 	"net/http"
 )
 
 func main() {
 	// create an usecase implementation. we only need to pass a repository object.
-	usecaseImplementation := someusecase.New{{ .ServiceNameUpper }}UseCaseImplementation()
+	usecaseImplementation := someusecase.New[[[ .ServiceNameUpper ]]]UseCaseImplementation()
 
 	serverHandler, err := handler.NewChiHandler(usecaseImplementation)
 	if err != nil {
@@ -24,8 +24,8 @@ func main() {
 		Handler:           serverHandler,
 	}
 
-	err = server.ListenAndServe()
-	if err != nil {
-		panic(err)
-	}
+    err = server.ListenAndServe()
+    if err != nil {
+    	panic(err)
+   	}
 }

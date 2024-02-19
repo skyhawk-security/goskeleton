@@ -2,7 +2,7 @@
 
 set -e
 
-FUNCTION_NAME={{ .ServiceName }}
+FUNCTION_NAME=[[[ .ServiceName ]]]
 
 SCRIPT_PATH="$(realpath "$0")"
 DIR_PATH=$(dirname "$SCRIPT_PATH")
@@ -64,7 +64,7 @@ echo "building lambda binary"
 go mod tidy
 GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o main cmd/lambda/main.go
 
-if [[ "$local_invoke" == "true" ]];
+if [ "$local_invoke" == "true" ];
 then
   sam local invoke $FUNCTION_NAME --template deploy/lambda/cloudformation-template.yaml --event $EVENT_PATH
   exit $?
