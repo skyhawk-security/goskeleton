@@ -4,23 +4,24 @@
 
 # Go Skeleton
 
-
 Go Skeleton is a project aimed at creating skeleton services for easier and quicker onboarding to both the projects and
 the Golang language itself.
-The projects that are generated are built with Clean Architecture and support both native (docker, ec2, etc) and lambda
+The projects that are generated are built with Clean Architecture and support both native (docker, ec2, etc.) and lambda
 deployments.
 
+This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md).
+By participating, you are expected to uphold this code. Please report unacceptable behavior to [goskeleton@skyhawk.security](mailto:goskeleton@skyhawk.security) .
 
 ## Table Of Contents
 
 - [Installation](#installation)
 - [Features](#features)
 - [Example](#example)
-
-
+- [Discussion](#discussion)
+- [License](#license)
 
 ## Installation
-```azure
+```zsh
 go install
 ```
 
@@ -44,3 +45,11 @@ goskeleton web-service --serviceName mycoolservice --destination /Users/reshef.s
 
 #### For an event driven Lambda
 goskeleton event-driven --event-source SQS --event-source-arn arn:aws:sqs:us-east-1:123456789:resheftest-kabadi --serviceName mycoolservice --destination /Users/reshef.sharvit/Desktop/
+
+
+## Discussion
+Discuss **goskeleton** on [GitHub Discussions](https://github.com/skyhawk-security/goskeleton/discussions)
+
+
+## License
+[GPL-3.0](https://github.com/skyhawk-security/goskeleton/blob/main/LICENSE.md)
