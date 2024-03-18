@@ -1,0 +1,102 @@
+# Copyright (c) The GoSkeleton Authors
+# SPDX-License-Identifier: GPL-3.0-only
+
+name: Feature Request
+description: Suggest a new feature or other enhancement.
+title: "[Feat]: "
+labels: ["enhancement", "pending-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Thank you for opening a feature request.
+
+  - type: input
+    id: goskeleton-version
+    attributes:
+      label: GoSkeleton Version
+      description:
+        Paste the GoSkeleton cloned version or git ref below.
+        If you are not running the latest version of GoSkeleton,
+        please try cloning the latest release or main contents,
+        because your issue may have already been fixed."
+      placeholder: |
+        Example: v1.0.0 or main
+    validations:
+      required: true
+
+  - type: textarea
+    id: goskeleton-use-case
+    attributes:
+      label: Use Cases
+      description: |
+        Hey! To figure out if this feature request makes sense, we gotta understand what you're trying to do with it.
+        Mind telling us about the end goal you're shooting for that led you to suggest this feature?
+        Just focus on the issue for now, not how to fix it. You'll be able to expand about possible solutions below!
+      placeholder: |
+          A clear and concise description of what the problem is.
+          Example: I'm always frustrated when [...]
+          Example: I want to be able to [...]
+    validations:
+      required: true
+
+  - type: textarea
+    id: goskeleton-attempted-solution
+    attributes:
+      label: Attempted Solutions
+      description: |
+        If you've taken a crack at fixing the problem using what GoSkeleton already offers but hit a wall,
+        let us know all about it here. The more details, the better.
+        It'd be awesome if you could include actual config snippets you used, GoSkeleton commands you tried out, and the outcomes for each.
+        Just make sure to scrub out any sensitive info like passwords before you share those configs and commands.
+      placeholder: |
+          A clear and concise description of what you want to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: goskeleton-proposal
+    attributes:
+      label: The Proposal
+      description: |
+        Got an idea in mind for a way to address the issue with GoSkeleton features?
+        Tell us all about it here. It's really helps if you throw in specific examples, like what your idea would look like in config files or command lines.
+        This way, we get the whole picture of your suggestion.
+        And hey, if you're fuzzy on some details, no stress!
+        When we evaluate the feature request, we might suggest modifications as necessary to it to fit GoSkeleton's design better.
+      placeholder: |
+          A clear and concise description of any alternative solutions or features you've considered.
+    validations:
+      required: false
+
+  - type: textarea
+    id: goskeleton-references
+    attributes:
+      label: References
+      description: |
+        Know of any other GitHub issues, open or closed, that are linked to what you've talked about or to your suggested fix?
+        If you do, drop a list below with all of them mentioned.
+      placeholder: |
+        Example:
+          ```
+            - #1
+          ```
+    validations:
+      required: false
+
+  - type: textarea
+    id: goskeleton-add-context
+    attributes:
+      label: Additional Context
+      description: |
+        Add any other context or screenshots about the feature request here.
+      placeholder: |
+        Additional context...
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        > [!NOTE]
+        > If the submit button isn't working and you've filled in all the must-haves, double-check you didn't skip adding a **Title** for the issue.
