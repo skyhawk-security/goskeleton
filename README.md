@@ -1,4 +1,4 @@
-[![goskeleton](.github/resources/goskeleton_banner_logo.png)](#)
+[![goskeleton](.github/resources/goskeleton_logo.png)](#)
 
 [![Maintained by Skyhawk Security](https://img.shields.io/badge/maintained_by-Skyhawk_Security-6C00DB)](https://skyhawk.security)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=flat-square)](https://github.com/skyhawk-security/goskeleton/graphs/commit-activity)
@@ -49,10 +49,10 @@ goskeleton event-driven --event-source SQS --event-source-arn arn:aws:sqs:us-eas
 ```
 
 ## Discussion
-Have a question? Post it in **goskeleton** [GitHub Discussions](https://github.com/skyhawk-security/goskeleton/discussions)!
+Have a question? Post it in **goskeleton** [GitHub Discussions](https://github.com/skyhawk-security/goskeleton/discussions)
 
 ## Contributing to the project
-Want to contribute? Please read the [Contribution Guide](CONTRIBUTING.md).
+Want to contribute? Please read the [Contribution Guide](CONTRIBUTING.md)
 
 ## License
 [GPL-3.0](https://github.com/skyhawk-security/goskeleton/blob/main/LICENSE.md)
