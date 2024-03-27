@@ -6,3 +6,6 @@ contact_links:
   - name: GoSkeleton GitHub Discussions
     url: https://github.com/skyhawk-security/goskeleton/discussions
     about: Please ask and answer questions here.
+  - name: Want to contribute to goskeleton?
+    url: https://github.com/skyhawk-security/goskeleton/blob/main/CONTRIBUTING.md
+    about: Make sure to read contributing guidelines!
