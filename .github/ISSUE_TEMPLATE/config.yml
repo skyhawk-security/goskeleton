@@ -1,0 +1,8 @@
+# Copyright (c) The GoSkeleton Authors
+# SPDX-License-Identifier: GPL-3.0-only
+
+blank_issues_enabled: false
+contact_links:
+  - name: GoSkeleton GitHub Discussions
+    url: https://github.com/skyhawk-security/goskeleton/discussions
+    about: Please ask and answer questions here.

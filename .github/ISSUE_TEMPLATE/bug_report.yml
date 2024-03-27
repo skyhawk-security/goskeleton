@@ -1,0 +1,115 @@
+# Copyright (c) The GoSkeleton Authors
+# SPDX-License-Identifier: GPL-3.0-only
+
+name: Bug report
+description: Let us know about an unexpected error, a crash, or an incorrect behavior.
+title: "[Bug]: "
+labels: ["bug", "pending-triage"]
+body: 
+  - type: markdown
+    attributes:
+      value: |
+        ## Thanks for taking the time to fill out this bug report!
+        ---
+        ### Please fill out the sections below to help us understand and fix the issue.
+
+        To sort out issues, we need to be able to see the problem for ourselves. Basically, we need a way to easily replicate the issue right on our own machines. This could be something any tech person can just grab with a git clone or copy and paste straightaway, no extra fluff needed.
+
+        * If it’s a quick snippet, you should be able to just copy and paste it; for anything more complex, toss it into its own git repo, especially if it involves several files.
+        * Make sure you include everything necessary. Like, if you found a certain bit of code that crashes things, make sure that code is in there somewhere obvious.
+        * If there’s a bunch of steps, like needing to do something twice, it’d be super helpful to have that in a script. It’s way easier to run a script than to tweak settings back and forth.
+        * And ditch any extra stuff we don’t need – if it’s not part of what causes the bug, it’s just in the way.
+
+  - type: input
+    id: goskeleton-version
+    attributes:
+      label: GoSkeleton Version
+      description:
+        Paste the GoSkeleton cloned version or git ref below.
+        If you are not running the latest version of GoSkeleton,
+        please try cloning the latest release or main contents,
+        because your issue may have already been fixed.
+      placeholder: |
+        Example: v1.0.0 or main
+    validations:
+      required: true
+
+  - type: textarea
+    id: goskeleton-expected
+    attributes:
+      label: Expected Behavior
+      description:
+        What should have happened?
+      placeholder: |
+        What should have happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: goskeleton-actual
+    attributes:
+      label: Actual Behavior
+      description:
+        What actually happened?
+      placeholder: |
+        What actually happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: goskeleton-debug
+    attributes:
+      label: Debug Output
+      description:
+        Put here any debug output that can be helpful.
+        Debug output may contain sensitive information.
+        Please review it before posting publicly.
+      placeholder: |
+        Debug output
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: goskeleton-repro-steps
+    attributes:
+      label: Steps-to-Reproduce
+      description:
+        How do you trigger this bug? Please walk us through it step by step.
+      placeholder: |
+        1.
+        2.
+        3.
+        ...
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: goskeleton-os
+    attributes:
+      label: Operating System
+      description:
+        Which operating systems have you used? You may select more than one.
+      options:
+        - label: macOS
+        - label: Windows
+        - label: Linux
+    validations:
+      required: true
+
+  - type: textarea
+    id: goskeleton-add-context
+    attributes:
+      label: Additional Context
+      description: |
+        Are there anything atypical about your situation that we should know?
+      placeholder: |
+        Additional context...
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        > [!NOTE]
+        > If the submit button isn't working and you've filled in all the must-haves, double-check you didn't skip adding a **Title** for the issue.
