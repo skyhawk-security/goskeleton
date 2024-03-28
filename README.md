@@ -1,10 +1,15 @@
 [![goskeleton](.github/resources/goskeleton_logo.png)](#)
 
-[![Maintained by Skyhawk Security](https://img.shields.io/badge/maintained_by-Skyhawk_Security-6C00DB)](https://skyhawk.security)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=flat-square)](https://github.com/skyhawk-security/goskeleton/graphs/commit-activity)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=flat-square)](CODE_OF_CONDUCT.md)
-![go.mod Go version](https://img.shields.io/github/go-mod/go-version/skyhawk-security/goskeleton/main?style=flat-square&logo=go&label=ver)
-[![Go Report Card](https://goreportcard.com/badge/github.com/skyhawk-security/goskeleton)](https://goreportcard.com/report/github.com/skyhawk-security/goskeleton)
+[![Maintained by Skyhawk Security](https://img.shields.io/badge/maintained_by-Skyhawk_Security-6C00DB?style=for-the-badge)](https://skyhawk.security)
+[![Maintenance](https://img.shields.io/maintenance/yes/2024?style=for-the-badge)](https://github.com/skyhawk-security/goskeleton/pulse)
+[![Contributor covenant](https://img.shields.io/badge/Contributor_Covenant-v2.1-blue?style=for-the-badge&logo=contributorcovenant&color=%235E0D73)](CODE_OF_CONDUCT.md)
+
+[![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/skyhawk-security/goskeleton?style=for-the-badge)](https://github.com/skyhawk-security/goskeleton)
+[![Go Report Card](https://goreportcard.com/badge/github.com/skyhawk-security/goskeleton?style=for-the-badge)](https://goreportcard.com/report/github.com/skyhawk-security/goskeleton)
+[![Go Doc](https://img.shields.io/badge/doc-reference-blue?style=for-the-badge&logo=go)](https://pkg.go.dev/github.com/skyhawk-security/goskeleton)
+
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/skyhawk-security/goskeleton/pull_request_build.yaml?style=for-the-badge)](https://github.com/skyhawk-security/goskeleton/actions/workflows/pull_request_build.yaml)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/skyhawk-security/goskeleton?style=for-the-badge)](https://github.com/skyhawk-security/goskeleton/graphs/commit-activity)
 
 # GoSkeleton
 - [Installation](#installation)
