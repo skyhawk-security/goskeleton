@@ -7,7 +7,7 @@ Resources:
     Properties:
       Handler: main
       FunctionName: [[[ .ServiceName ]]]
-      Runtime: go1.x
+      Runtime: provided.al2
       CodeUri: ./
       MemorySize: 256
       Timeout: 10
