@@ -62,7 +62,7 @@ fi
 #build
 echo "building lambda binary"
 go mod tidy
-GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o main cmd/lambda/main.go
+GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o bootstrap cmd/lambda/main.go
 
 if [ "$local_invoke" == "true" ];
 then

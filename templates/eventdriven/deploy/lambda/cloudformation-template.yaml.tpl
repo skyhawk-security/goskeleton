@@ -7,7 +7,9 @@ Resources:
     Properties:
       Handler: main
       FunctionName: [[[ .ServiceName ]]]
-      Runtime: go1.x
+      Runtime: provided.al2023
+      Architectures:
+        - arm64
       Events:
         My[[[ .EventSource ]]]Event:
           Type: [[[ .EventSource ]]]
