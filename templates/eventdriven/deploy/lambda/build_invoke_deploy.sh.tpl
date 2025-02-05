@@ -73,7 +73,7 @@ fi
 
 # prepare
 mkdir -p dist/
-cp main dist/
+cp bootstrap dist/
 cp deploy/lambda/cloudformation-template.yaml dist/
 
 # package
