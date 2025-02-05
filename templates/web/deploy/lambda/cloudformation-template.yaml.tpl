@@ -130,3 +130,63 @@ Resources:
       HttpMethod: ANY
       ResourceId: !Ref [[[ .ServiceName ]]]ProxyResource
       RestApiId: !Sub '{{resolve:ssm:/microservices/apigateway/api_gateway_id:1}}'
+  LambdaErrorRateAlarm:
+    Type: 'AWS::CloudWatch::Alarm'
+    Properties:
+      AlarmName: !Join [ '-', [ !Ref LambdaFunction, "LambdaErrorRateAlarm" ] ]
+      EvaluationPeriods: 1
+      Threshold: 10
+      ComparisonOperator: 'GreaterThanOrEqualToThreshold'
+      TreatMissingData: 'notBreaching'
+      Metrics:
+        - Id: "e1"
+          Expression: "errors / requests * 100"
+          Label: "Error Percentage"
+          ReturnData: true
+        - Id: "errors"
+          MetricStat:
+            Metric:
+              Namespace: "AWS/Lambda"
+              MetricName: "Errors"
+              Dimensions:
+                - Name: "FunctionName"
+                  Value: !Ref LambdaFunction
+            Period: 300
+            Stat: "Sum"
+          ReturnData: false
+        - Id: "requests"
+          MetricStat:
+            Metric:
+              Namespace: "AWS/Lambda"
+              MetricName: "Invocations"
+              Dimensions:
+                - Name: "FunctionName"
+                  Value: !Ref LambdaFunction
+            Period: 300
+            Stat: "Sum"
+          ReturnData: false
+      ActionsEnabled: true
+      AlarmActions:
+        - !Sub "arn:${AWS::Partition}:sns:${AWS::Region}:${AWS::AccountId}:OpsGenie_P1"
+      OKActions:
+        - !Sub "arn:${AWS::Partition}:sns:${AWS::Region}:${AWS::AccountId}:OpsGenie_P1"
+  LambdaThrottleAlarm:
+    Type: 'AWS::CloudWatch::Alarm'
+    Properties:
+      AlarmName: !Join ['-', [ !Ref LambdaFunction, "LambdaThrottleAlarm" ]]
+      Namespace: 'AWS/Lambda'
+      MetricName: 'Throttles'
+      Dimensions:
+        - Name: 'FunctionName'
+          Value: !Ref LambdaFunction
+      Statistic: 'Sum'
+      Period: 300  # 5 minutes
+      Threshold: 0
+      ComparisonOperator: 'GreaterThanThreshold'
+      EvaluationPeriods: 1
+      TreatMissingData: notBreaching
+      AlarmDescription: 'Alarm for Lambda throttles above 0'
+      AlarmActions:
+        - !Sub "arn:${AWS::Partition}:sns:${AWS::Region}:${AWS::AccountId}:OpsGenie_P1"
+      OKActions:
+        - !Sub "arn:${AWS::Partition}:sns:${AWS::Region}:${AWS::AccountId}:OpsGenie_P1"
