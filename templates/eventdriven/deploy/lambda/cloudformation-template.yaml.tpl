@@ -14,13 +14,13 @@ Resources:
         My[[[ .EventSource ]]]Event:
           Type: [[[ .EventSource ]]]
           Properties:
-          {{- if ("SQS" | eq .EventSource) }}
+          [[[- if ("SQS" | eq .EventSource) ]]]
             Queue: [[[ .EventSourceARN ]]]
             BatchSize: 10
-          {{- end }}
-          {{- if ("SNS" | eq .EventSource) }}
+          [[[- end ]]]
+          [[[- if ("SNS" | eq .EventSource) ]]]
             Topic: [[[ .EventSourceARN ]]]
-          {{- end}}
+          [[[- end]]]
       CodeUri: ./
       MemorySize: 256
       Timeout: 10
