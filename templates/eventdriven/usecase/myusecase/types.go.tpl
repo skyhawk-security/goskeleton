@@ -9,3 +9,6 @@ type [[[ .ServiceNameUpper ]]]UseCaseImplementation struct {
 func New[[[ .ServiceNameUpper ]]]UseCaseImplementation() *[[[ .ServiceNameUpper ]]]UseCaseImplementation {
 	return &[[[ .ServiceNameUpper ]]]UseCaseImplementation{}
 }
+
+type Repository interface {
+}
