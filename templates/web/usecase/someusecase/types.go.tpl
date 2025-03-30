@@ -13,3 +13,7 @@ type [[[ .ServiceNameUpper ]]]UseCase interface {
 // notice the lowercase repository. it means it's unexported and therefor cannot be accessed.
 type [[[ .ServiceNameUpper ]]]UseCaseImplementation struct {
 }
+
+type Repository interface {
+}
+

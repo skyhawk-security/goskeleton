@@ -1,4 +1,3 @@
 package repository
 
-type Repository interface {
-}
+// repository implementation here
